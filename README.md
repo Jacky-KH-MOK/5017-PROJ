@@ -13,12 +13,15 @@ End-to-end prototype that links a Solidity compliance monitor with oracle mocks,
 ### Prerequisites
 - Node.js 18+
 - PNPM or npm 8+ (workspaces enabled)
+- This setup is cross-platform and works on macOS, Linux, and Windows.
 
 ### Quick Start
 ```bash
 npm install
 npm run dev
 ```
+
+*Note: If using PNPM instead of npm, replace `npm` with `pnpm` in the commands above.*
 
 The `dev` script:
 1. Starts a Hardhat node on `127.0.0.1:8545`.
@@ -31,30 +34,3 @@ Once the stack is live:
 - Alerted Cases tab: run the "Push Evidence On-Chain" workflow to emit `logSuspicious` / `logDepositTrace` / `logResolution` events, then switch to the Regulator View tab to replay those events straight from the audit-trail contract.
 
 Need only the UI/services? Run `npm run dev:stack` (assumes you already have a node + deployment available). By default the compliance engine starts empty; set `SEED_DEMO=true` before running if you want the three narrated demo cases pre-loaded (see `docs/demo-scenarios.md`). `docs/runbook.md` contains a walkthrough.
-
-### Docker
-
-Build and run the entire stack inside a single container using the provided `Dockerfile` + `docker-compose.yml`:
-
-```bash
-docker compose build
-docker compose up
-```
-
-The compose file exposes every port the stack needs:
-- Hardhat JSON-RPC `8545`
-- Oracle mock API `4001`
-- Compliance engine API/SSE `4002`
-- Analyst dashboard `5173`
-- Demo wallet `5174`
-
-When the container is running, navigate to `http://localhost:5173` for the dashboard and `http://localhost:5174` for the wallet. Stop the stack with `docker compose down`.
-
-### Environment Variables
-- `services/oracle-mock`: `ORACLE_PORT` (default `4001`)
-- `services/compliance-engine`: `COMPLIANCE_PORT`, `ORACLE_BASE`, `RPC_URL`, `MONITOR_ADDRESS` (audit-trail address), `CEX_BACKEND_KEY` (signs on-chain logs), `AUDIT_CHAIN_ID`, `SEED_DEMO`
-- `dashboard`: `VITE_ENGINE_URL` (default `http://localhost:4002`)
-- `wallet`: `VITE_ENGINE_URL` (default `http://localhost:4002`)
-
-Keep the oracle mock running before starting the compliance engine; the engine will attempt to call `/identity`, `/sanctions`, and `/geolocation` immediately during seeding.
-
