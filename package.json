@@ -1,0 +1,27 @@
+{
+  "name": "stablecoin-compliance-demo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "contracts",
+    "services/*",
+    "dashboard",
+    "wallet"
+  ],
+  "scripts": {
+    "dev:contracts": "npm run node -w contracts",
+    "dev:oracles": "npm run dev -w services/oracle-mock",
+    "dev:engine": "npm run dev -w services/compliance-engine",
+    "dev:dashboard": "npm run dev -w dashboard",
+    "dev:wallet": "npm run dev -w wallet",
+    "dev:stack": "concurrently \"npm:dev:oracles\" \"npm:dev:engine\" \"npm:dev:dashboard\" \"npm:dev:wallet\"",
+    "dev": "tsx scripts/dev-all.ts",
+    "build": "npm run compile -w contracts && npm run build -w services/oracle-mock && npm run build -w services/compliance-engine && npm run build -w dashboard"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "tsx": "^4.7.0",
+    "wait-on": "^7.2.0"
+  }
+}
+

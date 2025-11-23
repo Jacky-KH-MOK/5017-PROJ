@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+coverage/
+artifacts/
+cache/
+deployments/
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+package-lock.json
+pnpm-lock.yaml
+tmp/
+*.tsbuildinfo
+

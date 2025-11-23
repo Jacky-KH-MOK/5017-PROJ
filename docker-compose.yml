@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  stack:
+    build: .
+    image: stablecoin-compliance-demo:dev
+    ports:
+      - "8545:8545"
+      - "4001:4001"
+      - "4002:4002"
+      - "5173:5173"
+      - "5174:5174"
+    environment:
+      VITE_ENGINE_URL: http://localhost:4002
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
