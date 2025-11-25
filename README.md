@@ -31,19 +31,19 @@ The `dev` script:
 Once the stack is live:
 ## Demo wallet: 
 - `http://localhost:5174` – submit preset or custom transfers (hit `/transfers/simulate`).
-![Demo Wallet](images\demo_wallet.png)
+![Demo Wallet](images/demo_wallet.png)
 
 ## Compliance dashboard: 
 - `http://localhost:5173` – monitor transfers, trigger AML checks, and inspect oracle verdicts. Use the role toggle (Analyst / Policy Admin / Auditor) to mirror the contract’s three lines of defense.
 
 ### Tabs
 - **Transfer Live Feed** – real-time stream of simulated and wallet-generated transfers, including verdict badges once the AML engine finishes its review.
-![Transfer_Live_Feed](images\Transfer_Live_Feed.png)
+![Transfer_Live_Feed](images/Transfer_Live_Feed.png)
 
 - **Alerted Cases** – queue of escalated cases with oracle context, STR switch, and the “Push Evidence On-Chain” workflow (Freeze, Due Diligence, or Release) that emits `logSuspicious` / `logDepositTrace` / `logResolution` events.
-![Alerted_Cases](images\Alerted_Cases.png)
+![Alerted_Cases](images/Alerted_Cases.png)
 
 - **Regulator View** – on-chain replay portal where auditors can paste the copied userId/wallet to fetch audit trail events directly from the `CexAmlAuditTrail` contract.
-![Regulator_View](images\Regulator_View.png)
+![Regulator_View](images/Regulator_View.png)
 
 By default the compliance engine starts empty; set `SEED_DEMO=true` before running if you want the three narrated demo cases pre-loaded (see `docs/demo-scenarios.md`). `docs/runbook.md` contains a walkthrough.
