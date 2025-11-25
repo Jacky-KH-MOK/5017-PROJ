@@ -32,7 +32,7 @@ export interface ComplianceCase {
   oracle?: OracleBundle;
 }
 
-export type AuditAction = "freeze" | "release" ;
+export type AuditAction = "freeze" | "DD" | "release";
 
 export interface AuditWorkflowSummary {
   transferId: number;

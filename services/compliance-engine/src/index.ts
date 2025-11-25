@@ -59,7 +59,7 @@ const simulateSchema = z.object({
 
 const workflowSchema = z.object({
   transferId: z.number(),
-  action: z.enum(["freeze", "release", "confiscate"]).default("freeze"),
+  action: z.enum(["freeze", "DD", "release", "confiscate"]).default("freeze"),
   strFiled: z.boolean().default(true),
 });
 

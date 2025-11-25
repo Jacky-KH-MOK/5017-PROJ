@@ -322,6 +322,7 @@ export default function App() {
                     >
                       <option value="freeze">Freeze assets</option>
                       <option value="DD">Due diligence</option>
+                      <option value="release">Release funds</option>
                     </select>
                   </label>
                   <label className="flex items-center gap-2">

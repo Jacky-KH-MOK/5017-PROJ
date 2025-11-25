@@ -29,8 +29,21 @@ The `dev` script:
 3. Launches the oracle mock (4001), compliance engine (4002), compliance dashboard (5173), and demo wallet (5174).
 
 Once the stack is live:
-- Demo wallet: `http://localhost:5174` – submit preset or custom transfers (hit `/transfers/simulate`).
-- Compliance dashboard: `http://localhost:5173` – monitor transfers, trigger AML checks, and inspect oracle verdicts. Use the role toggle (Analyst / Policy Admin / Auditor) to mirror the contract’s three lines of defense.
-- Alerted Cases tab: run the "Push Evidence On-Chain" workflow to emit `logSuspicious` / `logDepositTrace` / `logResolution` events, then switch to the Regulator View tab to replay those events straight from the audit-trail contract.
+## Demo wallet: 
+- `http://localhost:5174` – submit preset or custom transfers (hit `/transfers/simulate`).
+![Demo Wallet](images\demo_wallet.png)
 
-Need only the UI/services? Run `npm run dev:stack` (assumes you already have a node + deployment available). By default the compliance engine starts empty; set `SEED_DEMO=true` before running if you want the three narrated demo cases pre-loaded (see `docs/demo-scenarios.md`). `docs/runbook.md` contains a walkthrough.
+## Compliance dashboard: 
+- `http://localhost:5173` – monitor transfers, trigger AML checks, and inspect oracle verdicts. Use the role toggle (Analyst / Policy Admin / Auditor) to mirror the contract’s three lines of defense.
+
+### Tabs
+- **Transfer Live Feed** – real-time stream of simulated and wallet-generated transfers, including verdict badges once the AML engine finishes its review.
+![Transfer_Live_Feed](images\Transfer_Live_Feed.png)
+
+- **Alerted Cases** – queue of escalated cases with oracle context, STR switch, and the “Push Evidence On-Chain” workflow (Freeze, Due Diligence, or Release) that emits `logSuspicious` / `logDepositTrace` / `logResolution` events.
+![Alerted_Cases](images\Alerted_Cases.png)
+
+- **Regulator View** – on-chain replay portal where auditors can paste the copied userId/wallet to fetch audit trail events directly from the `CexAmlAuditTrail` contract.
+![Regulator_View](images\Regulator_View.png)
+
+By default the compliance engine starts empty; set `SEED_DEMO=true` before running if you want the three narrated demo cases pre-loaded (see `docs/demo-scenarios.md`). `docs/runbook.md` contains a walkthrough.

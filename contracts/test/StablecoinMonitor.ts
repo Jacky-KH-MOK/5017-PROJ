@@ -33,11 +33,15 @@ describe("CexAmlAuditTrail", () => {
       .to.emit(trail, "DepositTrace")
       .withArgs(1, user, deposit, 8453, backend.address, 123456);
 
-    await expect(trail.connect(backend).logResolution(user, internalTx, "release", false))
+    await expect(trail.connect(backend).logResolution(user, internalTx, "DD", false))
       .to.emit(trail, "AmlResolution")
-      .withArgs(2, user, internalTx, "release", false, anyValue);
+      .withArgs(2, user, internalTx, "DD", false, anyValue);
 
-    expect(await trail.eventId()).to.equal(2);
+    await expect(trail.connect(backend).logResolution(user, internalTx, "release", true))
+      .to.emit(trail, "AmlResolution")
+      .withArgs(3, user, internalTx, "release", true, anyValue);
+
+    expect(await trail.eventId()).to.equal(3);
   });
 
   it("restricts logging to the backend signer", async () => {
