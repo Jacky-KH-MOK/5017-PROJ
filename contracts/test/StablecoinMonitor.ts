@@ -6,7 +6,7 @@ describe("CexAmlAuditTrail", () => {
   async function deployFixture() {
     const [backend, outsider] = await ethers.getSigners();
     const Factory = await ethers.getContractFactory("CexAmlAuditTrail");
-    const trail = await Factory.deploy();
+    const trail = (await Factory.deploy()) as any;
     await trail.waitForDeployment();
     return { trail, backend, outsider };
   }

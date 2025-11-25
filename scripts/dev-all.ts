@@ -18,7 +18,7 @@ function log(message: string) {
 function pipeOutput(child: ChildProcess, label: string) {
   const forward = (data: any) => {
     const text = data.toString();
-    text.split(/\r?\n/).forEach((line) => {
+    text.split(/\r?\n/).forEach((line: string) => {
       if (line.length === 0) return;
       console.log(`[${label}] ${line}`);
     });
@@ -83,7 +83,12 @@ async function main() {
   ensureEnvFile();
   log("Starting Hardhat node...");
   spawnWorkspace("hardhat", "node", "contracts");
-  await waitOn({ resources: ["tcp:127.0.0.1:8545"], timeout: 30000 });
+  await new Promise<void>((resolve, reject) => {
+    waitOn({ resources: ["tcp:127.0.0.1:8545"], timeout: 30000 }, (err: any) => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
   log("Hardhat node ready. Deploying CexAmlAuditTrail...");
   await runWorkspace("deploy", "deploy:local", "contracts");
   log("Deployment complete. Launching oracle, compliance engine, dashboard, and wallet...");
