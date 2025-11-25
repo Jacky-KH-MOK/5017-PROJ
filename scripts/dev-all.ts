@@ -1,5 +1,7 @@
 import { spawn, ChildProcess, SpawnOptions } from "child_process";
 import waitOn from "wait-on";
+import fs from "fs";
+import path from "path";
 
 const isWin = process.platform === "win32";
 const npmCmd = isWin ? "cmd.exe" : "npm";
@@ -62,7 +64,23 @@ function runWorkspace(label: string, script: string, workspace: string) {
   });
 }
 
+function ensureEnvFile() {
+  const envPath = path.join(rootDir, ".env");
+  const envSamplePath = path.join(rootDir, "env.sample");
+  
+  if (!fs.existsSync(envPath)) {
+    if (fs.existsSync(envSamplePath)) {
+      log("Creating .env file from env.sample...");
+      fs.copyFileSync(envSamplePath, envPath);
+      log(".env file created successfully.");
+    } else {
+      log("Warning: env.sample not found. .env file may be missing required variables.");
+    }
+  }
+}
+
 async function main() {
+  ensureEnvFile();
   log("Starting Hardhat node...");
   spawnWorkspace("hardhat", "node", "contracts");
   await waitOn({ resources: ["tcp:127.0.0.1:8545"], timeout: 30000 });
